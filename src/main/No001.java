@@ -30,7 +30,7 @@ public class No001 {
 		//合計÷件数で平均値を算出(割り切れない場合は考えなくてよい？intで定義)
 		avg = sum / n ;
 
-		//結果を出力
+		//結果をスペース空けて出力
 		System.out.println(sum + " " + avg + " " + max + " " + min);
 	}
 }
