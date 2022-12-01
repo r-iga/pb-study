@@ -1,0 +1,25 @@
+name: Example
+on:
+  issues:
+    types:
+      - labeled
+env:
+  PROJECT_OWNER: r-iga
+  PROJECT_NUMBER: 1
+  TARGET_LABEL: 'FooBar'
+jobs:
+  example:
+    name: Example job
+    runs-on: ubuntu-latest
+    steps:
+    - uses: monry/add-issue-to-project@v1
+      if: ${{ contains(github.event.issue.labels.*.name, env.TARGET_LABEL) }} # ココを工夫するコトで、柔軟な設定ができる
+      id: add-issue-to-project
+      with:
+        github-token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+        project-owner: ${{ env.PROJECT_OWNER }}
+        project-number: ${{ env.PROJECT_NUMBER }}
+        issue-id: ${{ github.event.issue.node_id }}
+    - name: Output result
+      run: |
+        echo '${{ steps.add-issue-to-project.outputs.added-project-item-id }}'
